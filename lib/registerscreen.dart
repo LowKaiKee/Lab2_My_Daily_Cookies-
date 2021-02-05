@@ -31,7 +31,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       theme: new ThemeData(primarySwatch: Colors.brown),
       home: new Scaffold(
         appBar: new AppBar(
-          title: new Text('Registration'),
+          title: new Text('Registration',
+              style: TextStyle(fontSize: 17, color: Colors.white)),
         ),
         body: new SingleChildScrollView(
           child: new Container(
@@ -50,7 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget registrationPart(BuildContext context) {
     return new Container(
       child: Padding(
-          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+          padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -68,7 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: InputDecoration(
                       labelText: 'Name', icon: Icon(Icons.person)),
                   keyboardType: TextInputType.name,
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16, color: Colors.brown),
                 )),
                 Container(
                     child: TextFormField(
@@ -80,7 +81,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: InputDecoration(
                       labelText: 'Email', icon: Icon(Icons.email)),
                   keyboardType: TextInputType.name,
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16, color: Colors.brown),
                 )),
                 Container(
                     child: TextFormField(
@@ -92,7 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: InputDecoration(
                       labelText: 'Phone Number', icon: Icon(Icons.phone)),
                   keyboardType: TextInputType.name,
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16, color: Colors.brown),
                 )),
                 Container(
                     child: TextFormField(
@@ -101,7 +102,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onSaved: (String val) {
                     _password = val;
                   },
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16, color: Colors.brown),
                   decoration: InputDecoration(
                     labelText: 'Password',
                     icon: Icon(Icons.lock),
@@ -133,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onTap: _showEULA,
                         child: Text.rich(TextSpan(
                             text: 'I agree the ',
-                            style: TextStyle(fontSize: 16),
+                            style: TextStyle(fontSize: 16, color: Colors.brown),
                             children: <TextSpan>[
                               TextSpan(
                                   text: 'terms condition',
@@ -153,9 +154,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       borderRadius: BorderRadius.circular(20.0)),
                   minWidth: 300,
                   height: 50,
-                  child: Text('Register',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  child: Text('Register', style: TextStyle(fontSize: 16)),
                   color: Colors.brown,
                   textColor: Colors.white,
                   elevation: 15,
@@ -165,7 +164,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 GestureDetector(
                     onTap: _onLogin,
                     child: Text('Already register',
-                        style: TextStyle(fontSize: 16))),
+                        style: TextStyle(fontSize: 16, color: Colors.brown))),
               ],
             ),
           )),
@@ -181,7 +180,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         type: ProgressDialogType.Normal, isDismissible: false);
     pr.style(message: "Registration...");
     await pr.show();
-    http.post("http://www.doubleksc.com/my_daily_cookies/php/register_user.php",
+    http.post(
+        "https://www.doubleksc.com/my_daily_cookies/php/PHPMailer/index.php",
         body: {
           "name": _name,
           "email": _email,
@@ -189,9 +189,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "phone": _phone,
         }).then((res) {
       print(res.body);
-      if (res.body == "succes") {
+      if (res.body == "success") {
         Toast.show(
-          "Registration success. An email has been sent to .$_email. Please check your email for OTP verification. Also check in your spam folder.",
+          "Registration success. An OTP verification email has been sent to $_email. Please verify your account.",
           context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.CENTER,
@@ -203,7 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _onLogin();
       } else {
         Toast.show(
-          "Registration failed",
+          "Registration failed.",
           context,
           duration: Toast.LENGTH_LONG,
           gravity: Toast.CENTER,
@@ -282,7 +282,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     if (!_termsCondition) {
       Toast.show(
-        "Please click the Terms Condition",
+        "Please fill in all the required fields.",
         context,
         duration: Toast.LENGTH_LONG,
         gravity: Toast.CENTER,
@@ -294,21 +294,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        // return object of type Dialog
         return AlertDialog(
           title: new Text(
-            "Register new account",
+            "Register",
             style: TextStyle(
                 color: Colors.brown, fontSize: 16, fontWeight: FontWeight.bold),
           ),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           content: new Text(
-            "Are you sure?",
+            "Are you sure you want to register a new account ?",
             style: TextStyle(color: Colors.brown, fontSize: 16),
           ),
           actions: <Widget>[
-            // usually buttons at the bottom of the dialog
             new FlatButton(
               child: new Text(
                 "Yes",
